@@ -25,7 +25,8 @@ You should be able to see the startup of the application is complete:
 
 
 # 4. Testing
-**First method: using curl**
+**First method: using curl** 
+
 In your bash write the following command:
 
     curl -X POST -F "file=@path/to/your/image.jpg" http://localhost:8000/segment-image
@@ -61,5 +62,33 @@ We tested the app on postman using the input image:
 Now, to see the segmented image, you can check it out in the generated output saved as: output.png
 Here is our output image:
 ![output image](explanation_images/output_test.png)
+
+# 6. Docker
+- Install [Docker Desktop](https://docs.docker.com/get-docker/) 
+
+- We added the "dockerfile" in the repository. This file defines the instructions for building the Docker image:
+  -   It uses the official Python 3.10 image as the base image.
+  -   Sets the working directory to `/app`.
+  -   Copies `requirements.txt` and installs dependencies.
+  -   Copies the entire project into the container.
+  -   Exposes port 8000.
+  -   Sets an environment variable.
+  -   Specifies the command to run our FastAPI app with Uvicorn.
+  - 
+- Now, open the terminal in the directory where your `dockerfile` is located and run the following command to build the Docker image:
+
+    `docker build -t segment_image`
+  
+  You'll get this:
+
+  ![docker build](explanation_images/docker_build.png)
+
+- Run Docker container
+	- using the following command:
+	`docker run -p 8000:8000 segment_image`
+	- or by running the image on Docker Desktop:
+	 ![run the image](explanation_images/run_image.png)
+  
+- Access  the API Service from the api requests.
 
 
