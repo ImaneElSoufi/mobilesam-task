@@ -74,7 +74,7 @@ Here is our output image:
   -   Exposes port 8000.
   -   Sets an environment variable.
   -   Specifies the command to run our FastAPI app with Uvicorn.
-  - 
+
 - Now, open the terminal in the directory where your `dockerfile` is located and run the following command to build the Docker image:
 
     `docker build -t segment_image`
