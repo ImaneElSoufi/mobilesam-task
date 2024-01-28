@@ -1,53 +1,65 @@
-# Internship Take Home Assignment - Software Engineer
+﻿# Internship Take Home Assignment Solution- Software Engineer
+This FastAPI service deploys the MobileSam segmentation model for image segmentation. Users can interact with the model by submitting image files through the `/segment-image` endpoint. We will explain in detail how to set it up, along with usage instructions.
 
-This assignment is designed to assess your software engineering skills in the context of integrating and deploying a machine learning model. Though the task involves a machine learning model, the primary focus is on developing and deploying the software application.
+# 1. Installation
 
-## How to Run the Code
+ - Install Python (if not already installed): [PythonDownloads](https://www.python.org/downloads/) 
+  - Clone the repository: 
+    `git clone https://github.com/ImaneElSoufi/mobilesam-task`
+   -  Navigate to the project directory:
+     `cd fastapi-mobilesam`    
+ -  Install dependencies:
+  `pip install -r requirements.txt`
 
-1. **Create a Virtual Environment and Activate It**
-
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-    ```
-
-2. **Install the Requirements**
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-3. **Run the Code**
-
-    ```bash
-    python main.py
-    ```
-
-## Task Overview
-
-**Title:** MobileSam Segmentation Model Service
-
-**Expected Time to Complete:** 4 hours
-
-**Objective:** Develop a FastAPI service to deploy the MobileSam segmentation model, containerize the service with Docker, and ensure efficient interaction with the model on the CPU.
-
-**Background:**
-MobileSam is a machine learning model specialized in image segmentation on CPUs. Your task is to create a microservice that allows users to interact with this model via an API. You should find the script `main.py` in this repository, which contains the MobileSam model and a function `segment_everything` that takes an image as input and returns the segmentation result. You can use this function to develop your service. Ignore the default parameters of the function for now.
-
-## Task Description
-
-- **Develop a Microservice:** Use a Python API framework (we suggest FastAPI) to expose the MobileSam segmentation model as a RESTful API.
+# 2. Setting up the environment
+    python -m venv venv 
+    source venv/bin/activate
   
-- **Model Integration:** Incorporate the MobileSam segmentation model into your service. It should process image inputs and return segmentation results.
-  
-- **API Endpoints:** Create a POST endpoint `/segment-image` to accept an image file, process it through MobileSam, and return the segmentation result.
-  
-- **Documentation:** Provide clear instructions for setting up, running, and interacting with the service in a README.md file.
+# 3. Running the service locally
+Run the FastAPI service using Uvicorn:
+`uvicorn app:app --reload`
 
-- **[Bonus]** Docker Familiarity: Containerize your service using Docker.
+You should be able to see the startup of the application is complete:
 
-## Submission
+![startup](explanation_images/app_start.png)
 
-- Submit your code via a GitHub repository link.
-- Include a README file with detailed setup and usage instructions.
-- Provide any necessary scripts or files for testing the API.
+
+# 4. Testing
+**First method: using curl**
+In your bash write the following command:
+
+    curl -X POST -F "file=@path/to/your/image.jpg" http://localhost:8000/segment-image
+
+Change @path/to/your/image.jpg with the actual path to your input image.
+
+**Second method: using Postman**
+
+1.  **Create a POST Request:**
+        Create a new request and set the request type to `POST`.
+2.  **Set Request URL:**
+     Enter the URL of your FastAPI endpoint: `http://localhost:8000/segment-image`.
+3.  **Add Form Data:**
+    -   Select the "Body" tab.
+    -   Choose the `form-data` option.
+    -   Add a key-value pair:
+        -   Key: `file`
+        -   Value: Select a file (your image file) using the "Choose Files" button.
+4.  **Send Request:**
+    Click the "Send" button to execute the request.
+
+	 Here is an example:
+![postman ex](explanation_images/postman_1.png)
+
+5. **Review Response:**
+Examine the response in the Postman interface. It should include the segmentation result.
+![Response](explanation_images/postman_2.png)
+
+# 5. Example of an input image and its output
+We tested the app on postman using the input image:
+![input image](explanation_images/test.jpeg)
+
+Now, to see the segmented image, you can check it out in the generated output saved as: output.png
+Here is our output image:
+![output image](explanation_images/output_test.png)
+
+
